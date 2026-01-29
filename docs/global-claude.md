@@ -1,51 +1,34 @@
-## Getting Started
-
-**IMPORTANT**: Before starting any work on this project, always read the documents in the `agents/` folder if they exist:
-
-1. **`agents/plan.md`** - Full development roadmap and phase requirements
-2. **`agents/implementation-log.md`** - Implementation state, learnings, and what's next
-3. **`agents/repo-map.md`** - Codebase structure, key classes/functions, import patterns. Build with skill `hierarchical code mapping`
-
-**Token-saving tips**:
-
-- **Completed work**: Don't re-read completed phase plans unless debugging. Check `agents/plan.md` for phase status.
-- **Current focus**: Always read `agents/implementation-log.md` first - it has the current task and next steps.
-- **Codebase navigation**: Use `agents/repo-map.md` to find where code lives without reading every file.
-
 ## LLM Agent Workflow
-
-**Critical**: These documents go in EVERY context window. Keep them compact, clear, and unambiguous.
 
 ### The Development Loop
 
 ```
 ┌─────────────────────────────────────────────────────────┐
 │ 0. READ DOCS (if exist)                                 │
-│    └─ agents/plan.md → implementation-log.md            │
+│    └─ macro plan / implementation log / codebase map    │
 ├─────────────────────────────────────────────────────────┤
 │ 1. CREATE ISSUE                                         │
 │    └─ gh issue create --title '<task>' \                |
 |          --label '<short summary of task>'              │
 ├─────────────────────────────────────────────────────────┤
 │ 2. CREATE BRANCH                                        │
-│    └─ git checkout -b feature/description               │
+│    └─ git checkout -b <feature/fix/docs>/<description>  │
 ├─────────────────────────────────────────────────────────┤
 │ 3. CREATE PHASE PLAN                                    │
 │    └─ plans/phase-X.X-name.md (detailed tasks, tests)   │
 ├─────────────────────────────────────────────────────────┤
 │ 4. IMPLEMENT (TDD)                                      │
-│    └─ Write tests first → code → npm test → verify      │
+│    └─ Write tests first → code → test → review          │
 ├─────────────────────────────────────────────────────────┤
-│ 5. COMMIT & PUSH                                        │
-│    └─ Clear commit messages → push to feature branch    │
+│ 5. COMMIT OFTEN                                         │
+│    └─ Clear commit messages / smallest working commits  │
 ├─────────────────────────────────────────────────────────┤
-│ 6. CREATE PR                                            │
-│    └─ Open PR → wait for human review                   │
+│ 6. PUSH & CREATE PR                                     │
+│    └─ Push when done -> Open PR → wait for human review │
 ├─────────────────────────────────────────────────────────┤
-│ 7. UPDATE DOCS (after human approval)                   │
-│    ├─ Update implementation-log.md (keep <100 lines)    │
-│    ├─ Mark phase complete in plan.md                    │
-│    └─ Update repo-map.md                                │
+│ 7. UPDATE DOCS (after human approval) e.g :             │
+│    ├─ implementation logs                               │
+│    └─ codebase map                                      │
 └─────────────────────────────────────────────────────────┘
         │                                        │
         └────────── Loop back to step 1 ─────────┘
@@ -55,73 +38,26 @@ NOTE : Due to sandbox proxy configuration, you need to use the -R owner/repo fla
 
 ### Document Maintenance Rules
 
-**`agents/plan.md`** (Can be longer, ~500 lines):
-
-- Full roadmap, all phases, exit criteria
-- Update when: phase completes, requirements change, major architectural shift
-- Mark phases with status indicators
-- Keep technical details and specifications
-
-**`agents/implementation-log.md`** (MUST stay <100 lines):
-
-- **Purpose**: Prime LLM on current state and boundaries only
-- **NOT a detailed plan** - that goes in `plans/phase-X.X-name.md`
-- Update when: phase completes, boundaries change
-- Remove: completed phase details (keep only status table)
-- Keep: current phase pointer, boundaries (what NOT to do), critical learnings
-
-**`agents/repo-map.md`** (Update when code structure changes):
-
-- **Purpose**: Token-efficient codebase navigation for LLMs
-- Lists key classes, functions, and their locations
-- Documents import patterns and module structure
-- Update when: adding new modules, classes, or significant functions
-
-**After each phase completion**:
-
-1. Update implementation-log.md: mark phase done, update current phase, check line count
-2. Update plan.md: mark phase complete, update status table if needed
-3. Archive detailed work in git commits (don't bloat the log)
-
-**After adding new code** (modules, classes, significant functions):
-
-1. Update `agents/repo-map.md` with new symbols and their locations
-2. Keep the map accurate - it helps future LLMs navigate the codebase efficiently
-
-#### Why These Documents Matter
-
-- **`plan.md`** is your north star - it prevents scope creep and ensures each phase has clear completion criteria
-- **`implementation-log.md`** is institutional memory - it captures what worked, what didn't, and why decisions were made
-- Together they enable any developer (human or AI) to pick up the project and continue effectively
-
-#### Maintaining These Documents
-
-**When to compact:**
-- When documents exceed ~500 lines and become hard to scan
-- When major architectural decisions invalidate earlier plans
-- When starting a new major phase
-- When multiple sessions have added incremental updates that can be consolidated
-
 ### Quick Development Steps
 
-1. Read phase requirements from `agents/plan.md`
+1. Read phase requirements from a macro plan. **Have the human create one if there is none !**
 
-**IF `plans/phase-X.X-name.md` for the current phase DOESN'T EXIST:**
+**IF `task-X-plan.md` (detailed implementation plan for task X) for the current macro plan task DOESN'T EXIST:**
 
-1. Create detailed implementation plan in `plans/phase-X.X-name.md`
-2. Commit with detailed message to feature branch (never to main)
+1. Create detailed implementation plan in `task-X-plan.md`
+2. Commit with a detailed message to a branch (never to main)
 3. Push branch and create PR
-4. After human approval: update docs (keep log <100 lines), merge PR
+4. After human approval & pr merge: update docs
 
-**IF `plans/phase-X.X-name.md` for the current phase ALREADY EXISTS:**
+**IF `task-X-plan.md` for the current phase ALREADY EXISTS:**
 
-1. Create TodoWrite list with specific tasks
+1. Create TodoWrite list with specific subtasks and move to a branch
 2. Write unit tests for core functionality first
-3. Implement code, run `npm test` continuously
-4. Verify all exit criteria met
-5. Commit with detailed message (never to main)
+3. Implement code, run the test suite after each new code addition
+4. Verify all exit/success criteria met
+5. Commit often with conventional commit messages (WHY over HOW/WHAT)
 6. Push branch and create PR
-7. After human approval: update docs (keep log <100 lines), merge PR
+7. After human approval & pr merge: update docs
 
 ### Long-Running Tasks
 
@@ -147,4 +83,4 @@ And let me know when it's complete.
 
 - When working on a new phase/task independent of the previous one, create a new dedicated branch
 - The human in the loop is responsible for reviewing your work through the PRs
-- ALWAYS push to feature branches, NEVER directly to main
+- ALWAYS push to feature/fix/docs branches, NEVER directly to main
