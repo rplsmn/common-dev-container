@@ -1,7 +1,7 @@
 ---
 name: repo-map
 description: Generates a hierarchical repository map showing file structure, key symbols (classes, functions, exports), and dependencies. Use when exploring a new codebase, planning refactoring, understanding architecture, or when user says "map the repo", "show structure", or "what's in this codebase".
-allowed-tools: Read, Grep, Glob, Bash
+allowed-tools: Read, Grep, Glob, Bash, tree
 ---
 
 # Hierarchical Repository Mapper
@@ -17,6 +17,8 @@ Generate a token-efficient map of the repository that captures structure, key sy
 - Reducing context window usage on large projects
 
 ## Mapping Process
+
+### Step 0 : run `tree` if available
 
 ### Step 1: Discover Project Type
 
