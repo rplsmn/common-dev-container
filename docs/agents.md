@@ -4,12 +4,8 @@
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│ 0. READ DOCS (if exist)                                 │
+│ 1. READ DOCS (if exist)                                 │
 │    └─ macro plan / implementation log / codebase map    │
-├─────────────────────────────────────────────────────────┤
-│ 1. CREATE ISSUE                                         │
-│    └─ gh issue create --title '<task>' \                |
-|          --label '<short summary of task>'              │
 ├─────────────────────────────────────────────────────────┤
 │ 2. CREATE BRANCH                                        │
 │    └─ git checkout -b <feature/fix/docs>/<description>  │
@@ -33,8 +29,6 @@
         │                                        │
         └────────── Loop back to step 1 ─────────┘
 ```
-
-NOTE : Due to sandbox proxy configuration, you need to use the -R owner/repo flag when using gh commands
 
 ### Document Maintenance Rules
 
