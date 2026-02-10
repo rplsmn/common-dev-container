@@ -86,8 +86,12 @@ RUN curl -fsSL https://claude.ai/install.sh | bash
 # Install Mistral Vibe
 RUN curl -LsSf https://mistral.ai/vibe/install.sh | bash
 
-# Set up PATH for all installed tools
+# Set up PATH for all installed tools (container processes)
 ENV PATH="/home/${USERNAME}/.local/bin:/home/${USERNAME}/.cargo/bin:${PATH}"
+
+# Configure PATH in shell profile for interactive sessions
+RUN echo 'export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"' >> ~/.bashrc \
+    && echo 'source "$HOME/.local/bin/env" 2>/dev/null || true' >> ~/.bashrc
 
 # Create workspace directory (will be mounted from host)
 RUN mkdir -p /home/${USERNAME}/devmachine
