@@ -1,0 +1,51 @@
+# Quadlet container file for systemd integration
+# Place this file in ~/.config/containers/systemd/
+# Then run: systemctl --user daemon-reload && systemctl --user enable --now devcontainer-pod
+
+[Unit]
+Description=Development Container for VS Code
+After=local-fs.target
+
+[Container]
+# Container image (build first with instructions in README)
+Image=localhost/devcontainer:latest
+
+# Container name
+ContainerName=devcontainer
+
+# Mount workspace from host
+Volume=%h/devmachine:/home/developer/devmachine:Z
+
+# Mount SSH keys (read-only for security)
+Volume=%h/.ssh:/home/developer/.ssh:ro,Z
+
+# Mount git config
+Volume=%h/.gitconfig:/home/developer/.gitconfig:ro,Z
+
+# Keep container running
+Exec=sleep infinity
+
+# Run as current user (rootless podman)
+User=1000
+Group=1000
+
+# Environment variables
+Environment=TERM=xterm-256color
+
+# Security options
+SecurityLabelDisable=true
+
+# Timezone (inherit from host)
+Volume=/etc/localtime:/etc/localtime:ro
+
+[Service]
+# Restart policy
+Restart=always
+RestartSec=10
+
+# Give time for graceful shutdown
+TimeoutStopSec=30
+
+[Install]
+# Start on user login
+WantedBy=default.target
